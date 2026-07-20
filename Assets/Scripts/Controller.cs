@@ -27,10 +27,12 @@ public class Controller : MonoBehaviour
     private DestroySystem _destroy;
     public ScoreSystem _scoreSystem;
 
+    private List<Cell> _otherDestroy = new();
     private List<Match> list = new();
     private Cell selectedCell;
     private float _time = 0.3f;
 
+    private bool _islifeCycleRunning = false;
     public bool IsPaused { get; private set; }
 
     private void Awake()
@@ -164,7 +166,6 @@ public class Controller : MonoBehaviour
         if (targetY < 0 || targetY >= _lvl.Height)
             return;
 
-
         Cell target = _board.GetCell(targetX, targetY);
 
         bool swapped = await _swap.Swap(_board, _boardView, start, target);
@@ -183,10 +184,6 @@ public class Controller : MonoBehaviour
 
         await LifeCycle();
     }
-
-
-    private bool _islifeCycleRunning = false;
-    private List<Cell> _otherDestroy = new();
 
     private async UniTask LifeCycle()
     {
@@ -230,7 +227,6 @@ public class Controller : MonoBehaviour
             }
         }
     }
-
 
     private async UniTask GenerateBoosters()
     {
@@ -392,8 +388,5 @@ public class Controller : MonoBehaviour
         }
         await UniTask.WhenAll(tasks);
     }
-    public int GetStartSwapCount()
-    {
-        return _lvl.SwapAwailable;
-    }
+    public int GetStartSwapCount() =>  _lvl.SwapAwailable;
 }

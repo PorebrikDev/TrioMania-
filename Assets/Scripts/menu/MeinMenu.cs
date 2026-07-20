@@ -7,11 +7,6 @@ public class MeinMenu : MonoBehaviour
     [SerializeField] private Button _start;
     [SerializeField] private Button _exid;
 
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         _start.onClick.AddListener(StartClick);
@@ -33,5 +28,4 @@ public class MeinMenu : MonoBehaviour
     {
         Application.Quit();
     }
-
 }

@@ -16,14 +16,11 @@ public class SwapSystem
         SwapPiece(board, a, b);
         await SwapPieceView(boardView, a, b);
 
-
-
         CellActivityService.Remove(a, CellActivity.Swapping);
         CellActivityService.Remove(b, CellActivity.Swapping);
 
         return true;
     }
-
 
     public void SwapPiece(Board board, Cell a, Cell b)
     {
@@ -32,7 +29,6 @@ public class SwapSystem
         board.SetPiece(a.X, a.Y, b.Piece);
         board.SetPiece(b.X, b.Y, temp);
     }
-
 
     private async UniTask SwapPieceView(BoardView boardView, Cell a, Cell b)
     {

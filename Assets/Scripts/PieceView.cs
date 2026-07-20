@@ -8,7 +8,6 @@ public class PieceView : MonoBehaviour
     private RectTransform _rt;
     private Image _image;
 
-
     private void Awake()
     {
         _image = GetComponent<Image>();
@@ -38,7 +37,6 @@ public class PieceView : MonoBehaviour
 
     public UniTask PlayBooster(Cell cell) => PieceViewAnimations.PlayBooster(_rt, cell);
 
-    //public UniTask PlayShake(Cell cell) => PieceViewAnimations.Shake(_rt);
     private bool _isShaking;
 
     public async UniTask PlayShake(Cell cell)

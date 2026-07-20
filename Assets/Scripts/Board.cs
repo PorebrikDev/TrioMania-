@@ -3,7 +3,6 @@ using UnityEngine;
 public class Board
 {
     private Cell[,] _cells;
-
     public int Width { get; private set; }
     public int Height { get; private set; }
 
@@ -32,5 +31,4 @@ public class Board
     {
         _cells[x, y].Piece = piece;
     }
-
 }

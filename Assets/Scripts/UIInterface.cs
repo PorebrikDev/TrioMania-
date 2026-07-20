@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Windows;
+
 public class UIInterface : MonoBehaviour
 {
     [SerializeField] private Controller _controller;
@@ -27,8 +27,6 @@ public class UIInterface : MonoBehaviour
     [SerializeField] private Button _exe;
     [SerializeField] private Button _yes;
     [SerializeField] private Button _no;
-
-
 
     private int swap = 0;
     private int lastpos = 0;
@@ -57,7 +55,6 @@ public class UIInterface : MonoBehaviour
         _pauseRestart.onClick.AddListener(ClickRestart);
         _pauseStop.onClick.AddListener(ClickStop);
 
-
         _windowPauseMenu.gameObject.SetActive(false);
         _windowEndMenu.gameObject.SetActive(false);
         _windowQwe.gameObject.SetActive(false);
@@ -71,11 +68,6 @@ public class UIInterface : MonoBehaviour
         _scoreCount.text = score.ToString();
     }
 
-    private void Yes()
-    {
-        SceneManager.LoadSceneAsync("MainMenu");
-    }
-    private void No() => CloseQwe();
     public void OpenQwe() => _windowQwe.gameObject.SetActive(true);
     public void CloseQwe() => _windowQwe.gameObject.SetActive(false);
 
@@ -167,9 +159,6 @@ public class UIInterface : MonoBehaviour
         SetPool(text);
     }
 
-    private void SetPool(TMP_Text card) => card.gameObject.SetActive(false);
-
-
     private TMP_Text GetPool()
     {
         foreach (var card in _cards)
@@ -194,9 +183,12 @@ public class UIInterface : MonoBehaviour
         }
     }
 
+    private void SetPool(TMP_Text card) => card.gameObject.SetActive(false);
+    private void Yes() => SceneManager.LoadSceneAsync("MainMenu");
+    private void No() => CloseQwe();
     private void ClickRestart() => SceneManager.LoadScene("Game");
-
     private void ClickStop() => SceneManager.LoadScene("MainMenu");
+
 
     private void OnDestroy()
     {
