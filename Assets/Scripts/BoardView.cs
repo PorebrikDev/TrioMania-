@@ -18,6 +18,7 @@ public class BoardView : MonoBehaviour
     private CellView[,] _cellView;
     private Stack<PieceView> _pieceViewsPool = new();
 
+    private Vector2 _cellSize;
     public CellView GetCellView(Cell cell)
     {
         return _cellView[cell.X, cell.Y];
@@ -31,6 +32,9 @@ public class BoardView : MonoBehaviour
     public void Build(Board board, DataLevel lvl)
     {
         _cellView = new CellView[board.Width, board.Height];
+
+        _cellSize = new Vector2(_boardRect.rect.width / board.Width, _boardRect.rect.height / board.Height);
+
         CreatePoolPieceView(lvl.CellCount);
 
         for (int y = 0; y < board.Height; y++)
@@ -49,14 +53,32 @@ public class BoardView : MonoBehaviour
         }
     }
 
+    //public Cell GetCellByScreenPosition(Board board, Vector2 screenPos, DataLevel lvl)
+    //{
+    //    Vector2 localPos;
+
+    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(_boardRect, screenPos, null, out localPos);
+
+    //    int x = Mathf.FloorToInt(localPos.x / lvl.CellSize);
+    //    int y = Mathf.FloorToInt(-localPos.y / lvl.CellSize);
+
+    //    if (x < 0 || x >= board.Width) return null;
+    //    if (y < 0 || y >= board.Height) return null;
+
+    //    return board.GetCell(x, y);
+    //}
+
     public Cell GetCellByScreenPosition(Board board, Vector2 screenPos, DataLevel lvl)
     {
-        Vector2 localPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_boardRect, screenPos, null, out Vector2 localPos);
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(_boardRect, screenPos, null, out localPos);
+        Rect rect = _boardRect.rect;
 
-        int x = Mathf.FloorToInt(localPos.x / lvl.CellSize);
-        int y = Mathf.FloorToInt(-localPos.y / lvl.CellSize);
+        float xPos = localPos.x - rect.xMin;
+        float yPos = rect.yMax - localPos.y;
+
+        int x = Mathf.FloorToInt(xPos / _cellSize.x);
+        int y = Mathf.FloorToInt(yPos / _cellSize.y);
 
         if (x < 0 || x >= board.Width) return null;
         if (y < 0 || y >= board.Height) return null;
@@ -72,7 +94,10 @@ public class BoardView : MonoBehaviour
         _cellView[cell.X, cell.Y] = view;
 
         RectTransform rect = view.GetComponent<RectTransform>();
-        rect.anchoredPosition = new Vector2(cell.X * lvl.CellSize + lvl.CellSize * 0.5f, -cell.Y * lvl.CellSize - lvl.CellSize * 0.5f);
+
+        rect.sizeDelta = _cellSize;
+
+        rect.anchoredPosition = new Vector2(cell.X * _cellSize.x + _cellSize.x * 0.5f, -cell.Y * _cellSize.y - _cellSize.y * 0.5f);
     }
 
     public PieceView CreatePieceAndView(Cell cell, DataLevel lvl)
@@ -83,7 +108,10 @@ public class BoardView : MonoBehaviour
         _cellView[cell.X, cell.Y].SetPieceView(view);
 
         RectTransform rect = view.GetComponent<RectTransform>();
-        rect.anchoredPosition = new Vector2(cell.X * lvl.CellSize + lvl.CellSize * 0.5f, -cell.Y * lvl.CellSize - lvl.CellSize * 0.5f);
+
+        rect.sizeDelta = _cellSize;
+
+        rect.anchoredPosition = new Vector2(cell.X * _cellSize.x + _cellSize.x * 0.5f, -cell.Y * _cellSize.y - _cellSize.y * 0.5f);
 
         return view;
     }

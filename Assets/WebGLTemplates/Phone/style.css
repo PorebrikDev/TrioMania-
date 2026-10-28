@@ -1,0 +1,38 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+/* Окно игры */
+#unity-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* Телефонное соотношение 9:16 */
+    width: min(360px, 100vw);
+    height: min(640px, 100vh);
+    aspect-ratio: 9 / 16;
+}
+
+/* Unity Canvas */
+#unity-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* На телефоне — занимаем весь экран */
+@media (max-width: 600px) {
+    #unity-container {
+        width: 100vw;
+        height: 100vh;
+        left: 0;
+        top: 0;
+        transform: none;
+    }
+}

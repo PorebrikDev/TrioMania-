@@ -60,9 +60,6 @@ public class Controller : MonoBehaviour
 
         _destroy.OnDestroyed += _scoreSystem.AddScore;
 
-        Debug.Log("Controller Start");
-        Debug.Log(_lvl.SwapAwailable);
-
         IsPaused = false;
     }
 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </div>
+
+    <script>
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+
+        var config = {
+            arguments: [],
+            dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+            frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+            codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "{{{ COMPANY_NAME }}}",
+            productName: "{{{ PRODUCT_NAME }}}",
+            productVersion: "{{{ PRODUCT_VERSION }}}"
+        };
+
+        var canvas = document.querySelector("#unity-canvas");
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                // loading progress
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
